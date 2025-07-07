@@ -1,100 +1,81 @@
 # GeoHog Platform
+## Smart Earth Digger Tool for Geoscientists
 
-<div align="center">
-  <img src="GEOHOG_Logo_1024.svg" alt="GeoHog Logo" width="200"/>
-  
-  <h2>🌍 Smart Earth Digger Tool for Geoscientists</h2>
-  
-  <p><strong>⚠️ UNDER CONSTRUCTION ⚠️</strong></p>
-  
-  <p>A powerful, privacy-first workspace tailored for geological research, data analysis, and earth science workflows.</p>
-  
-  <img src="https://img.shields.io/badge/Status-Under%20Development-orange" alt="Under Development"/>
-  <img src="https://img.shields.io/badge/Privacy-First-green" alt="Privacy First"/>
-  <img src="https://img.shields.io/badge/Open%20Source-Yes-blue" alt="Open Source"/>
-</div>
+**Built on [AppFlowy](https://github.com/AppFlowy-IO/AppFlowy) - The Open Source Workspace**
 
 ---
 
-## 🚀 About GeoHog
+GeoHog is a specialized geological workspace platform designed for geoscientists, built on the solid foundation of AppFlowy. It combines the collaborative power of AppFlowy with advanced geological analysis capabilities.
 
-GeoHog is a specialized workspace application built for geoscientists, researchers, and earth science professionals. Based on the solid foundation of AppFlowy, GeoHog provides:
+## 🌍 What is GeoHog?
 
-- **📊 Geological Data Management** - Organize research, field notes, and datasets
-- **🗺️ Spatial Analysis Tools** - Built-in support for geological mapping
-- **📈 Research Workflows** - Streamlined processes for scientific documentation
-- **🔒 Data Privacy** - Your research data stays under your control
-- **🌐 Cloud Hosting** - Secure, reliable hosting on Supabase
+GeoHog transforms the way geoscientists work by providing:
+- **Collaborative Workspace**: AppFlowy's proven document editing and team collaboration
+- **Geological Integration**: Seamless connection to geological analysis services
+- **Data Management**: Organize seismic data, well logs, core samples, and reports
+- **AI-Powered Insights**: Geological AI assistant for interpretation and analysis
+- **Professional Reporting**: Generate geological reports and visualizations
 
-## 🛠️ Current Status
+## 🏗️ Architecture
 
-🚧 **This project is actively under development**
+GeoHog uses a **layered architecture** that maintains legal compliance while protecting competitive advantages:
 
-### ✅ Completed Features
-- Core workspace functionality
-- Desktop application (macOS, Windows, Linux)
-- Database and document management
-- Custom GeoHog branding and icons
+- **Public Layer** (this repository): AppFlowy workspace + geological integration points
+- **Private Layer** (separate repositories): Proprietary geological analysis services
+- **Interface Layer**: Secure API connections between public and private components
 
-### 🔄 In Progress
-- Web hosting setup on Supabase
-- Geological data templates
-- Field research workflows
-- Cloud synchronization
+This architecture allows us to:
+✅ Benefit from AppFlowy's ongoing development  
+✅ Maintain AGPL compliance  
+✅ Protect our geological expertise  
+✅ Scale geological services independently  
 
-### 🎯 Planned Features
-- Mobile app synchronization
-- Geological mapping integration
-- Sample tracking systems
-- Research collaboration tools
+## 🚀 For Geoscientists
 
-## 🏗️ Technology Stack
+GeoHog provides specialized tools for:
+- **Seismic Data Analysis**: Process and interpret seismic surveys
+- **Well Log Interpretation**: Analyze formation data and lithology
+- **Core Sample Analysis**: Automated geological logging and analysis
+- **Geological Mapping**: Visualize subsurface structures
+- **Report Generation**: Professional geological reports
 
-- **Frontend**: Flutter (Cross-platform)
-- **Backend**: Rust
-- **Database**: PostgreSQL (via Supabase)
-- **Hosting**: Supabase Cloud Platform
-- **Storage**: Supabase Storage
+## 🔧 Technical Foundation
 
-## 🌐 Hosting & Deployment
+**Built on AppFlowy:**
+- Document editing and collaboration
+- Database and project management
+- Team workspaces and sharing
+- Cross-platform support (Windows, macOS, Linux, iOS, Android)
 
-GeoHog is designed to be hosted on [Supabase](https://supabase.com), providing:
-
-- ✅ **Reliable Infrastructure** - 99.9% uptime SLA
-- ✅ **Global CDN** - Fast worldwide access
-- ✅ **Automatic Backups** - Your data is protected
-- ✅ **Real-time Sync** - Collaborate seamlessly
-- ✅ **GDPR Compliant** - Meet data protection requirements
-
-## 🚀 Getting Started
-
-*Coming soon - detailed installation and setup instructions*
-
-### For Developers
-
-1. Clone this repository
-2. Follow setup instructions in `HOSTING.md`
-3. Configure Supabase hosting using `.github/SECRETS-TEMPLATE.md`
+**GeoHog Extensions:**
+- Geological data integration layer
+- API connections to specialized analysis services
+- Geological data visualization components
+- Industry-standard format support
 
 ## 📖 Documentation
 
-- **[Hosting Guide](HOSTING.md)** - Complete Supabase setup
-- **[Security Guide](.github/SECURITY-CHECKLIST.md)** - Protect your deployment
-- **[Development Setup](.cursor/DEVSETUP%20INST.md)** - Developer instructions
+- [Architecture Overview](.cursor/ARCHITECTURE.md)
+- [Private Services Plan](.cursor/PRIVATE_SERVICES.md)
+- [Legal Compliance Strategy](.cursor/FORK_ARCHIT.md)
+- [Integration Layer](frontend/appflowy_flutter/lib/integrations/README.md)
 
 ## 🤝 Contributing
 
-This project is based on [AppFlowy](https://github.com/AppFlowy-IO/AppFlowy) - we extend our gratitude to the AppFlowy team for their excellent foundation.
+GeoHog is built on the open-source AppFlowy foundation. Contributions to the public workspace layer are welcome under the AGPL v3 license.
 
-## 📧 Contact
+For geological service development and business partnerships, please contact us directly.
 
-- **Developer**: @szilarddenes
-- **Project**: GeoHog Platform
-- **Purpose**: Geological research and earth science workflows
+## 📄 License
+
+This project inherits the AGPL v3 license from AppFlowy for the public workspace components. Geological analysis services are developed separately under proprietary licenses.
+
+## 🔗 Links
+
+- **AppFlowy Foundation**: [https://github.com/AppFlowy-IO/AppFlowy](https://github.com/AppFlowy-IO/AppFlowy)
+- **AppFlowy Website**: [https://appflowy.io](https://appflowy.io)
+- **GeoHog Platform**: [Your website/contact info here]
 
 ---
 
-<div align="center">
-  <p><strong>Built with ❤️ for the geoscience community</strong></p>
-  <p><em>Making earth science research more efficient, one dig at a time.</em></p>
-</div>
+**Legal Notice**: GeoHog is built on AppFlowy's open-source foundation. All AppFlowy components remain under AGPL v3 license. Geological analysis capabilities are provided through separate proprietary services.
