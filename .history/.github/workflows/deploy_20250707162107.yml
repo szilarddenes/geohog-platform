@@ -1,0 +1,151 @@
+name: Deploy to Supabase
+
+on:
+  push:
+    branches: [staging, main]
+  pull_request:
+    branches: [staging, main]
+
+env:
+  FLUTTER_VERSION: '3.24.5'
+  JAVA_VERSION: '11'
+
+jobs:
+  test:
+    name: Test Application
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          cache: true
+      
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'adopt'
+          java-version: ${{ env.JAVA_VERSION }}
+      
+      - name: Get Flutter dependencies
+        working-directory: frontend/appflowy_flutter
+        run: flutter pub get
+      
+      - name: Run Flutter analyzer
+        working-directory: frontend/appflowy_flutter
+        run: flutter analyze
+      
+      - name: Run Flutter tests
+        working-directory: frontend/appflowy_flutter
+        run: flutter test
+
+  deploy-staging:
+    name: Deploy to Staging
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/staging'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Supabase CLI
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
+      
+      - name: Link Supabase project
+        run: |
+          echo "${{ secrets.SUPABASE_ACCESS_TOKEN }}" | supabase auth login --token
+          supabase link --project-ref ${{ secrets.SUPABASE_PROJECT_ID_STAGING }}
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      
+      - name: Run database migrations
+        run: supabase db push
+      
+      - name: Deploy Edge Functions
+        run: supabase functions deploy --no-verify-jwt
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          cache: true
+      
+      - name: Build Flutter Web
+        working-directory: frontend/appflowy_flutter
+        run: |
+          flutter config --enable-web
+          flutter build web --release --dart-define=SUPABASE_URL=${{ secrets.SUPABASE_URL_STAGING }} --dart-define=SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY_STAGING }}
+      
+      - name: Deploy to Supabase Storage
+        run: |
+          # Upload web build to Supabase Storage
+          supabase storage cp -r frontend/appflowy_flutter/build/web/ supabase://web-hosting/staging/
+      
+      - name: Run post-deployment tests
+        run: |
+          echo "Running post-deployment health checks..."
+          # Add your health check commands here
+          curl -f ${{ secrets.STAGING_URL }}/health || exit 1
+
+  deploy-production:
+    name: Deploy to Production
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Supabase CLI
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
+      
+      - name: Link Supabase project
+        run: |
+          echo "${{ secrets.SUPABASE_ACCESS_TOKEN }}" | supabase auth login --token
+          supabase link --project-ref ${{ secrets.SUPABASE_PROJECT_ID_PRODUCTION }}
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      
+      - name: Run database migrations
+        run: supabase db push
+      
+      - name: Deploy Edge Functions
+        run: supabase functions deploy --no-verify-jwt
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          cache: true
+      
+      - name: Build Flutter Web
+        working-directory: frontend/appflowy_flutter
+        run: |
+          flutter config --enable-web
+          flutter build web --release --dart-define=SUPABASE_URL=${{ secrets.SUPABASE_URL_PRODUCTION }} --dart-define=SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY_PRODUCTION }}
+      
+      - name: Deploy to Supabase Storage
+        run: |
+          # Upload web build to Supabase Storage
+          supabase storage cp -r frontend/appflowy_flutter/build/web/ supabase://web-hosting/production/
+      
+      - name: Run post-deployment tests
+        run: |
+          echo "Running post-deployment health checks..."
+          # Add your health check commands here
+          curl -f ${{ secrets.PRODUCTION_URL }}/health || exit 1
+      
+      - name: Notify deployment success
+        run: |
+          echo "🚀 Production deployment successful!"
+          echo "URL: ${{ secrets.PRODUCTION_URL }}" 
